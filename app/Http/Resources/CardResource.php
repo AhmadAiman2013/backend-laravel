@@ -21,6 +21,7 @@ class CardResource extends JsonResource
             'order' => $this->order,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+            'tasks' => TaskResource::collection($this->tasks),
         ];
     }
 }
