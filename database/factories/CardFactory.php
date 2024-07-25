@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Boards>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Card>
  */
-class BoardsFactory extends Factory
+class CardFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,7 +17,8 @@ class BoardsFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => fake()->word()
+            'title' => fake()->sentence(),
+            'order' => fake()->numberBetween(1, 10),
         ];
     }
 }
