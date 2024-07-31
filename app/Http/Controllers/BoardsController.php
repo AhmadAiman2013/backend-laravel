@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\BoardsResource;
 use App\Models\Boards;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 
 class BoardsController extends Controller
@@ -11,9 +12,9 @@ class BoardsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $boards = Boards::latest()->get();
+        $boards = $request->user()->boards()->latest()->get();
 
         return BoardsResource::collection($boards);
     }
@@ -39,6 +40,9 @@ class BoardsController extends Controller
      */
     public function show(Boards $board)
     {
+        Gate::authorize('view', $board);
+
+        $board->load('cards');
         return new BoardsResource($board);
     }
 

@@ -19,17 +19,17 @@ class BoardsPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Boards $boards): bool
+    public function view(User $user, Boards $board): bool
     {
-        return true;
+        return $user->id === $board->user_id;
     }
 
     /**
      * Determine whether the user can create models.
      */
-    public function create(User $user): bool
+    public function create(User $user, Boards $board): bool
     {
-        return true;
+        return $user->id === $board->user_id;
     }
 
     /**

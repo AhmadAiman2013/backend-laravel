@@ -20,7 +20,7 @@ class BoardsResource extends JsonResource
             'title' => $this->title,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'cards' => CardResource::collection($this->cards),
+            'cards' => CardResource::collection($this->whenLoaded('cards')),
         ];
     }
 }

@@ -2,11 +2,15 @@
 
 use App\Models\Boards;
 use App\Models\User;
+use Illuminate\Testing\Fluent\AssertableJson;
 
 
 test('can lists boards', function () {
     $user = User::factory()->create();
+    $otherUser = User::factory()->create();
+
     $boards = Boards::factory(3)->create(['user_id' => $user->id]);
+    Boards::factory(2)->create(['user_id' => $otherUser->id]);
 
     $response = $this->actingAs($user)->getJson('/api/boards');
     $response->assertStatus(200);
@@ -16,6 +20,13 @@ test('can lists boards', function () {
             '*' => ['id', 'user_id','title', 'created_at', 'updated_at'],
         ]
     ]);
+
+    $response->assertJson(fn (AssertableJson $json) =>
+    $json->has('data', 3, fn ($json) =>
+        $json->where('user_id', $user->id)
+             ->etc()
+    )
+);
 });
 
 test('can show a board', function () {
