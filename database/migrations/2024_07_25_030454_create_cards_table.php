@@ -13,9 +13,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cards', function (Blueprint $table) {
-            $table->id();
+            $table->ulid('id')->primary();
             $table->string('title');
-            $table->foreignIdFor(Boards::class)->constrained()->onDelete('cascade');
+            $table->foreignUlid('boards_id')->constrained()->cascadeOnDelete();
             $table->integer('order');
             $table->timestamps();
         });

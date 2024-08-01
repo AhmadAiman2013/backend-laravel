@@ -13,8 +13,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tasks', function (Blueprint $table) {
-            $table->id();
-            $table->foreignIdFor(Card::class)->constrained()->cascadeOnDelete();
+            $table->ulid('id')->primary();
+            $table->foreignUlid('card_id')->constrained()->cascadeOnDelete();
             $table->string('title');
             $table->integer('order');
             $table->boolean('completed')->default(false);
