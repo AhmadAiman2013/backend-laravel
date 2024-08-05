@@ -51,6 +51,8 @@ class BoardsController extends Controller
      */
     public function update(Request $request, Boards $board)
     {
+        Gate::authorize('update', $board);
+
         $board->update(
             $request->validate([
                 'title' => 'required|string|max:50',
@@ -66,6 +68,8 @@ class BoardsController extends Controller
      */
     public function destroy(Boards $board)
     {
+        Gate::authorize('delete', $board);
+        
         $board->delete();
 
         return response(status: 204);
