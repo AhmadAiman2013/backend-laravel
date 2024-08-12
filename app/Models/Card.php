@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -14,6 +15,10 @@ class Card extends Model
 
     protected $fillable = ['title', 'boards_id', 'order'];
 
+    public function scopeOrdered(Builder $query) : Builder
+    {
+        return $query->orderBy('order');
+    }
     public function board() : BelongsTo
     {
         return $this->belongsTo(Boards::class);
@@ -21,6 +26,6 @@ class Card extends Model
 
     public function tasks() : HasMany
     {
-        return $this->hasMany(Task::class);
+        return $this->hasMany(Task::class)->ordered();
     }
 }
