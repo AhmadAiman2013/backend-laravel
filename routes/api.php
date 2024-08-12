@@ -12,7 +12,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         return $request->user();
     });
     Route::apiResource('boards', BoardsController::class);
-    Route::apiResource('boards.cards', CardController::class);
+    Route::apiResource('boards.cards', CardController::class)->except('index', 'show');
     Route::apiResource('cards.tasks', TaskController::class);
 });
 
