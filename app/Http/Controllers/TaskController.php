@@ -6,16 +6,16 @@ use App\Models\Task;
 use Illuminate\Http\Request;
 use App\Models\Card;
 use App\Http\Resources\TaskResource;
-use App\Models\Boards;
+use Illuminate\Support\Facades\Gate;
 
 class TaskController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Card $card)
+    public function recentTasks()
     {
-        $tasks = $card->tasks()->latest()->get();
+        $tasks = Task::latest()->limit(5)->get();
 
         return TaskResource::collection($tasks);
     }
@@ -38,22 +38,13 @@ class TaskController extends Controller
         return new TaskResource($task);
     }
 
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Card $card, Task $task)
-    {
-        $task = $card->tasks()->findOrFail($task->id);
-        return new TaskResource($task);
-    }
-
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Card $card, Task $task)
+    public function update(Request $request,Task $task)
     {
-        $task = $card->tasks()->findOrFail($task->id);
+        Gate::authorize('update', $task);
+
         $task->update(
             $request->validate([
                 'title' => 'required|string|max:100',
@@ -71,7 +62,8 @@ class TaskController extends Controller
      */
     public function destroy(Card $card, Task $task)
     {
-        $task = $card->tasks()->findOrFail($task->id);
+        Gate::authorize('delete', $task);
+        
         $task->delete();
 
         return response(status: 204);

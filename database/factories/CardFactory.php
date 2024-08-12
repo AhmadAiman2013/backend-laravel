@@ -17,7 +17,7 @@ class CardFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => fake()->sentence(),
+            'title' => fake()->sentence(3),
             'order' => fake()->numberBetween(1, 10),
         ];
     }

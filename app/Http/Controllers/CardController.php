@@ -31,7 +31,7 @@ class CardController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Boards $board, Card $card)
+    public function update(Request $request, Card $card)
     {
         Gate::authorize('update', $card);
 
@@ -48,12 +48,12 @@ class CardController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Boards $board, Card $card)
+    public function destroy(Card $card)
     {
         Gate::authorize('delete', $card);
 
         $card->delete();
-        
+
         return response(status: 204);
     }
 }

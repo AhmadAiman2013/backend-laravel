@@ -13,7 +13,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     });
     Route::apiResource('boards', BoardsController::class);
     Route::apiResource('boards.cards', CardController::class)->except('index', 'show');
-    Route::apiResource('cards.tasks', TaskController::class);
+    Route::apiResource('cards.tasks', TaskController::class)->except('index', 'show');
+    Route::get('/recent-tasks', [TaskController::class, 'recentTasks'])->name('tasks.recent');
 });
 
 
