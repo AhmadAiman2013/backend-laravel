@@ -16,11 +16,14 @@ class CardController extends Controller
      */
     public function store(Request $request, Boards $board)
     {
+
+        $maxOrder = $board->cards()->max('order') ?? 0;
+        $newOrder = $maxOrder + 1;
         $card = Card::create([
             ...$request->validate([
                 'title' => 'required|string|max:50',
-                'order' => 'required|integer',
             ]),
+            'order' => $newOrder,
             'boards_id' => $board->id,
         ]);
 
@@ -38,7 +41,6 @@ class CardController extends Controller
         $card->update(
             $request->validate([
                 'title' => 'required|string|max:50',
-                'order' => 'required|integer',
             ])
         );
 
@@ -48,11 +50,12 @@ class CardController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Card $card)
+    public function destroy(Boards $board,Card $card)
     {
-        Gate::authorize('delete', $card);
+        Gate::authorize('delete', [$board, $card]);
 
         $card->delete();
+        $board->cards()->where('order', '>', $card->order)->decrement('order');
 
         return response(status: 204);
     }
