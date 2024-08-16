@@ -34,9 +34,9 @@ class CardController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Card $card)
+    public function update(Request $request, Boards $board ,Card $card)
     {
-        Gate::authorize('update', $card);
+        Gate::authorize('update', [$board, $card]);
 
         $card->update(
             $request->validate([

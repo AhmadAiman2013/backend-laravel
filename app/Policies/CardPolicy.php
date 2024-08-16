@@ -15,7 +15,7 @@ class CardPolicy
      */
     public function update(User $user, Card $card): bool
     {
-        return $user->id === $card->board->user_id;
+        return $card->board->user_id === $user->id;
     }
 
     /**
