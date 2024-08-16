@@ -24,10 +24,6 @@ class CardPolicy
     public function delete(User $user, Card $card): bool
     {
 
-        // if ($card->boards_id == $board->id) {
-        //     return $user->id === $board->user_id;
-        // }
-        // return false;
         return $card->board->user_id === $user->id;
     }
 
