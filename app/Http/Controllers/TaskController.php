@@ -25,13 +25,13 @@ class TaskController extends Controller
      */
     public function store(Request $request, Card $card)
     {
+        $maxOrder = $card->tasks()->max('order') ?? 0;
+        $newOrder = $maxOrder + 1;
         $task = Task::create([
             ...$request->validate([
                 'title' => 'required|string|max:100',
-                'order' => 'required|integer',
-                'completed' => 'required|boolean',
-                'due_date' => 'required|date',
             ]),
+            'order' => $newOrder,
             'card_id' => $card->id,
         ]);
 
@@ -63,7 +63,7 @@ class TaskController extends Controller
     public function destroy(Card $card, Task $task)
     {
         Gate::authorize('delete', $task);
-        
+
         $task->delete();
 
         return response(status: 204);
