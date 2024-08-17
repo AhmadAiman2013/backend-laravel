@@ -21,7 +21,7 @@ class Card extends Model
     }
     public function board() : BelongsTo
     {
-        return $this->belongsTo(Boards::class);
+        return $this->belongsTo(Boards::class, 'boards_id');
     }
 
     public function tasks() : HasMany

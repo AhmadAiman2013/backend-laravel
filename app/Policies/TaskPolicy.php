@@ -4,7 +4,8 @@ namespace App\Policies;
 
 use App\Models\Task;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
+
+
 
 class TaskPolicy
 {
@@ -20,9 +21,23 @@ class TaskPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Task $task): bool
+    public function delete(User $user, Task $task): array
     {
-        return $user->id === $task->card->board->user_id;
+
+        $result = $task->card->board->user_id === $user->id;
+
+
+        // return $result;
+        return [
+            'result' => $result,
+            'debug' => [
+                'user_id' => $user->id,
+                'board_id' => $task->card->board->id,
+                'card_id' => $task->card->id,
+                'task_id' => $task->id,
+                'board_user_id' => $task->card->board->user_id,
+            ]
+        ];
     }
 
 }

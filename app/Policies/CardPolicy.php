@@ -2,10 +2,10 @@
 
 namespace App\Policies;
 
-use App\Models\Boards;
+
 use App\Models\Card;
 use App\Models\User;
-use Illuminate\Support\Facades\Log;
+
 
 class CardPolicy
 {

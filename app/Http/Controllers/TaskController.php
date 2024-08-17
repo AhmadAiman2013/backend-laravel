@@ -62,7 +62,8 @@ class TaskController extends Controller
      */
     public function destroy(Card $card, Task $task)
     {
-        Gate::authorize('delete', [$card->board ,$card ,$task]);
+        $board = $card->board;
+        Gate::authorize('delete', [$board, $card, $task]);
 
         $task->delete();
         $card->tasks()->where('order', '>', $task->order)->decrement('order');
