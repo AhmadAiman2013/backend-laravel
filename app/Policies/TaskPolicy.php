@@ -21,23 +21,13 @@ class TaskPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Task $task): array
+    public function delete(User $user, Task $task): bool
     {
 
         $result = $task->card->board->user_id === $user->id;
 
+        return $result;
 
-        // return $result;
-        return [
-            'result' => $result,
-            'debug' => [
-                'user_id' => $user->id,
-                'board_id' => $task->card->board->id,
-                'card_id' => $task->card->id,
-                'task_id' => $task->id,
-                'board_user_id' => $task->card->board->user_id,
-            ]
-        ];
     }
 
 }
