@@ -23,11 +23,9 @@ class TaskPolicy
      */
     public function delete(User $user, Task $task): bool
     {
-
         $result = $task->card->board->user_id === $user->id;
 
         return $result;
-
     }
 
 }
