@@ -47,10 +47,9 @@ class TaskController extends Controller
 
         $task->update(
             $request->validate([
-                'title' => 'required|string|max:100',
-                'order' => 'required|integer',
-                'completed' => 'required|boolean',
-                'due_date' => 'required|date',
+                'title' => 'string|max:100',
+                'completed' => 'boolean',
+                'due_date' => 'date',
             ])
         );
 
