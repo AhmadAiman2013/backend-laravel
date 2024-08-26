@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Card;
 use App\Http\Resources\TaskResource;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Log;
 
 class TaskController extends Controller
 {
@@ -41,15 +42,16 @@ class TaskController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request,Task $task)
+    public function update(Request $request, Card $card, Task $task)
     {
-        Gate::authorize('update', $task);
+        $board = $card->board;
+        Gate::authorize('update', [$board, $card, $task]);
 
         $task->update(
             $request->validate([
-                'title' => 'string|max:100',
-                'completed' => 'boolean',
-                'due_date' => 'date',
+                'title' => 'sometimes|string|max:100',
+                'completed' => 'sometimes|boolean|nullable',
+                'due_date' => 'sometimes|date|nullable',
             ])
         );
 

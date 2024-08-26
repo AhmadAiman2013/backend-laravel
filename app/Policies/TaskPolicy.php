@@ -15,7 +15,9 @@ class TaskPolicy
      */
     public function update(User $user, Task $task): bool
     {
-        return $user->id === $task->card->board->user_id;
+        $result = $task->card->board->user_id === $user->id;
+
+        return $result;
     }
 
     /**
