@@ -168,7 +168,7 @@ return [
     | the cookie from being sent to you when it can't be done securely.
     |
     */
-
+    // true in production
     'secure' => env('SESSION_SECURE_COOKIE'),
 
     /*
@@ -198,7 +198,7 @@ return [
     | Supported: "lax", "strict", "none", null
     |
     */
-
+    // none in production
     'same_site' => env('SESSION_SAME_SITE', 'lax'),
 
     /*
