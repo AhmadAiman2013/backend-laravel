@@ -32,10 +32,10 @@ class ProviderController extends Controller
 
             Auth::login($user);
 
-            return redirect(config('app.frontend_url') . '/dashboard');
+            return redirect(env('FRONTEND_URL') . '/dashboard');
 
         } catch (\Exception $e) {
-            return redirect(config('app.frontend_url') . '/login')->withErrors([
+            return redirect(env('app.frontend_url') . '/login')->withErrors([
                 'message' => 'Something went wrong',
             ]);
         }
